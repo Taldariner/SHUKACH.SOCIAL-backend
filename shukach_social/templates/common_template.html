@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHUKACH.SOCIAL</title>
+    <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+          crossorigin="anonymous">
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+            crossorigin="anonymous"></script>
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" >
+    <style>
+        body {
+            padding-top: 7vh;
+        }
+        .navbar {
+            height: 7vh;
+        }
+        footer {
+            min-height: 7vh;
+        }
+
+        .tag {
+            border-radius: 0.2em;
+        }
+        .tag .remove-tag {
+            cursor: pointer;
+        }   
+        .custom-select-list-group {
+            /* TODO: Make style more consistent with tags drowdowns */
+        }
+        
+        .fs-1-25 {
+            font-size: 1.25rem;
+        }
+        .fs-1-5 {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container-fluid">
+            
+            <a class="navbar-brand" href="/">
+                <h4 class="m-0"><b>SHUKACH.SOCIAL</b></h4>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse bg-primary" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item ms-3">
+                        <a class="nav-link {% if active_app == 'shukach_social' %}active{% endif %}" href="/">
+                            <h4 class="m-0">Home</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="nav-link {% if active_app == 'news' %}active{% endif %}" href="/news">
+                            <h4 class="m-0">News</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="nav-link {% if active_app == 'shukach_social' %}active{% endif %}" href="/#features">
+                            <h4 class="m-0">About</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="nav-link {% if active_app == 'api' %}active{% endif %}" href="/api">
+                            <h4 class="m-0">API</h4>
+                        </a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="nav-link {% if active_app == 'accounts' %}active{% endif %}" href="/accounts/profile/">
+                            <h4 class="m-0">Cabinet</h4>
+                        </a>
+                    </li>
+                     <!--<li class="nav-item ms-3">
+                        <a class="nav-link {% if active_app == 'admin' %}active{% endif %}" href="/admin">
+                            <h4 class="m-0">Admin</h4>
+                        </a>
+                    </li>-->
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock content %}
+
+    <!-- Footer -->
+    <footer class="py-2 bg-dark text-white d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-center">
+            <p class="fs-1-25 mb-0">
+                &copy; 2024 SHUKACH.SOCIAL. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    {% block scripts %}
+    {% endblock scripts %}
+
+</body>
+</html>

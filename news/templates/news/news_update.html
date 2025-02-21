@@ -1,0 +1,119 @@
+{% extends 'common_template.html' %}
+
+{% block content %}
+<section class="news_update" style="min-height: 86vh;">
+    <div class="container">
+        <div class="row py-4 justify-content-center">
+            <div class="col-md-12 mt-4">
+                
+                <div class="card w-100 mb-4">
+                    <div class="card-body">
+                        {% load custom_filters %}
+                        <form method="post">
+                            {% csrf_token %}
+                            
+                            {{ form.post_type.label_tag }}
+                            {{ form.post_type }}
+                            {% if form.post_type.errors %}
+                            {% for error in form.post_type.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.header.label_tag }}
+                            {{ form.header }}
+                            {% if form.header.errors %}
+                            {% for error in form.header.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.text.label_tag }}
+                            {{ form.text }}
+                            {% if form.text.errors %}
+                            {% for error in form.text.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.channel.label_tag }}
+                            {{ form.channel }}
+                            {% if form.channel.errors %}
+                            {% for error in form.channel.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.post_id.label_tag }}
+                            {{ form.post_id }}
+                            {% if form.post_id.errors %}
+                            {% for error in form.post_id.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.time_posted.label_tag }}
+                            {{ form.time_posted }}
+                            {% if form.time_posted.errors %}
+                            {% for error in form.time_posted.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.time_parsed.label_tag }}
+                            {{ form.time_parsed }}
+                            {% if form.time_parsed.errors %}
+                            {% for error in form.time_parsed.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+                            
+                            {{ form.language.label_tag }}
+                            {{ form.language }}
+                            {% if form.language.errors %}
+                            {% for error in form.languages.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.entities.label_tag }}
+                            {{ form.entities }}
+                            {% if form.entities.errors %}
+                            {% for error in form.entities.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.keywords.label_tag }}
+                            {{ form.keywords }}
+                            {% if form.keywords.errors %}
+                            {% for error in form.keywords.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+                            
+                            {{ form.hashtags.label_tag }}
+                            {{ form.hashtags }}
+                            {% if form.hashtags.errors %}
+                            {% for error in form.hashtags.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            <hr />
+                            
+                            <button type="submit" class="btn btn-success w-100">
+                                Save
+                            </button>
+                            <a href="{% url 'news:main' %}" class="btn btn-danger w-100 mt-3">
+                                Discard
+                            </a>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

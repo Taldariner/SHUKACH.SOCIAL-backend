@@ -1,0 +1,81 @@
+{% extends 'common_template.html' %}
+
+{% block content %}
+<section class="news_detail" style="min-height: 86vh;">
+    <div class="container">
+        <div class="row py-4 justify-content-center">
+            <div class="col-md-12 mt-4">
+                
+                <div class="card w-100 mb-4">
+                    <div class="card-body">
+                        {% load custom_filters %}
+                        
+                        <p class="card-title h5 mb-3" text-start> 
+                            {{ news.header }} 
+                        </p>
+                        
+                        <p class="card-text text-start">
+                            <a href="{{ news.channel.social.tag_template }}">
+                                {{ news.channel.name }} - {{ news.channel.social.name }}
+                            </a>
+                        </p>
+                        
+                        <hr />
+                        
+                        <p class="card-text text-start">
+                            {{ news.text | news_paragraphed | safe }}
+                        </p>
+
+                        <hr />
+
+                        <p class="card-text text-start">
+                            {% if news.pipelined != 0 %}
+                                {% spaceless %}
+                                {% if entities.all %}
+                                    {% for entity in entities %}
+                                        <span class="tag d-inline-block py-1 px-2 my-1 me-2 ms-0 text-bg-primary text-light">{{ entity }}</span>
+                                    {% endfor %}
+                                    <br />
+                                {% endif %}
+                                {% if keywords.all %}
+                                    {% for keyword in keywords %}
+                                        <span class="tag d-inline-block py-1 px-2 my-1 me-2 ms-0 text-bg-success text-light">{{ keyword }}</span>
+                                    {% endfor %}
+                                    <br />
+                                {% endif %}
+                                {% if hashtags.all %}
+                                    {% for hashtag in hashtags %}
+                                        <span class="tag d-inline-block py-1 px-2 my-1 me-2 ms-0 text-bg-warning text-light">{{ hashtag }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                                {% endspaceless %}
+                            {% else %}
+                                Sorry, this news haven't been autotagged yet.
+                            {% endif %}
+                        </p>
+
+                        <hr />
+
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <span>
+                                {% if user.userprofile.subscription.editor %}
+                                <a href="{% url 'news:update' news.id %}" class="text-decoration-none me-1">✏️</a>
+                                {% endif %}
+                                Прокодовано: {{ news.pipelined }}
+                            </span>
+                            <span>
+                                {{ news.time_posted | date:"H:i:s d.m.Y" }}
+                                {% if user.userprofile.subscription.editor %}
+                                <a href="{% url 'news:delete' news.id %}" class="text-decoration-none ms-1">🗑️</a>
+                                {% endif %}
+                            </span>
+                        </p>
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

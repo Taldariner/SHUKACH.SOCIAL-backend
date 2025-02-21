@@ -1,0 +1,19 @@
+#Django
+__pycache__/
+
+# IDE's
+.idea/
+.vscode/
+
+# venv's
+.venv/
+__venv__/
+
+# docs
+.docs/
+__docs__/
+
+# our's
+.env
+debug.log
+db.sqlite3

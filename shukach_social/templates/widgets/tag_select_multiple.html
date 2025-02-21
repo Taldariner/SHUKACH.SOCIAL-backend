@@ -1,0 +1,111 @@
+<div id="{{ widget.name }}_container" class="{{ widget.attrs.class }} position-relatve">
+    <input type="text" id="{{ widget.name }}_input" class="form-control tag-input" placeholder="Enter {{ widget.name }}">
+    <div id="{{ widget.name }}_suggestions" class="list-group position-absolute suggestions" style="display: none; max-height: 200px; overflow-y: auto; z-index: 5; width: calc(100% - 2rem);"></div>
+    {% spaceless %}
+    <div id="{{ widget.name }}_selected_tags" class="mt-1 selected-tags">
+        {% for group, options, index in widget.optgroups %}
+            {% if group %}
+                <div><label>{{ group }}</label>
+            {% endif %}
+            {% for option in options %}
+                {% if option.selected %}
+                <span class="tag d-inline-block py-1 px-2 mt-2 me-2 ms-0 {{widget.tags_color}} text-light">
+                    {{ option.label }}<span class="remove-tag ms-2">&times;</span>
+                    <input type="hidden" name="{{ widget.name }}" value="{{ option.value }}">
+                </span>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+    {% endspaceless %}
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        const $input = $('#{{ widget.name }}_input');
+        const $suggestions = $('#{{ widget.name }}_suggestions');
+        const $selectedTags = $('#{{ widget.name }}_selected_tags');
+        const allOptions = [
+            {% for group, options, index in widget.optgroups %}
+                {% for option in options %}
+                    {"label": "{{ option.label }}", "value": "{{ option.value }}"},
+                {% endfor %}
+            {% endfor %}
+        ];
+
+        // Оновлення підказок
+        function updateSuggestions() {
+            const query = $input.val().toLowerCase();
+            $suggestions.empty();
+
+            if (query) {
+                const filteredOptions = allOptions.filter(option => option.label.toLowerCase().includes(query));
+                $.each(filteredOptions, function(index, option) {
+                    const $suggestionItem = $('<div>', {
+                        class: 'list-group-item list-group-item-action',
+                        text: option.label,
+                        'data-value': option.value
+                    });
+
+                    $suggestionItem.on('click', function() {
+                        addTag(option);
+                    });
+
+                    $suggestions.append($suggestionItem);
+                    console.log("Pivo!");
+                    console.log($suggestions);
+                });
+                $suggestions.show();
+            } else {
+                $suggestions.hide();
+            }
+        }
+
+        // Додавання тегу до вибраних
+        function addTag(option) {
+            if ($selectedTags.find(`input[value="${option.value}"]`).length) {
+                return;
+            }
+
+            const $tag = $('<span>', {
+                class: 'tag d-inline-block py-1 px-2 mt-2 me-2 ms-0 {{widget.tags_color}} text-light',
+                text: option.label
+            });
+
+            const $removeBtn = $('<span>', {
+                class: 'remove-tag ms-2',
+                html: '&times;'
+            }).on('click', function() {
+                $tag.remove();
+            });
+
+            const $hiddenInput = $('<input>', {
+                type: 'hidden',
+                name: '{{ widget.name }}',
+                value: option.value
+            });
+
+            $tag.append($removeBtn, $hiddenInput);
+            $selectedTags.append($tag);
+
+            $input.val('');
+            $suggestions.empty().hide();
+        }
+
+        // Додавання обробника подій для наявних тегів
+        $selectedTags.on('click', '.remove-tag', function() {
+            $(this).closest('.tag').remove();
+        });
+
+        // Закривання підказок при натисканні поза списком
+        $(document).on('click', function(event) {
+            if (!$suggestions.is(event.target) && !$input.is(event.target) && $suggestions.has(event.target).length === 0) {
+                $suggestions.hide();
+            }
+        });
+
+        // Обробка подій введення в поле
+        $input.on('input', updateSuggestions);
+    });
+</script>

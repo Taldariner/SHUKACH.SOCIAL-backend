@@ -1,0 +1,116 @@
+{% extends 'common_template.html' %}
+
+{% block content %}
+<section class="profile" style="min-height: 86vh;">
+    <div class="container">
+        <div class="row py-4 justify-content-center">
+            <div class="col-md-12 mt-4">
+                <div class="card w-100 mb-4">
+                    <div class="card-body">
+
+                        <!-- Інформація про користувача -->
+                        <p class="card-title h5 mb-3 text-start">
+                            <span>{{ user.username }}</span>
+                        </p>
+
+                        <hr />
+
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <span>Account type:</span>
+                            <span>{{ user.userprofile.subscription.name }}</span>
+                        </p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <span>Subscription term:</span>
+                            <span>{{ user.userprofile.subscription_end }}</span>
+                        </p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <span>Subscription price:</span>
+                            <span>{{ user.userprofile.subscription.price }} $</span>
+                        </p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <span>Account balance:</span>
+                            <span>{{ user.userprofile.account_balance }} $</span>
+                        </p>
+
+                        <hr />
+                        
+                        <!-- Список розсилок користувача -->
+                        <p class="card-title h6 text-start">
+                            Your mailings:
+                        </p>
+                        <ul class="list-group my-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {% if mailing is not None %}
+                                    <a href="{% url 'accounts:mailing_detail' mailing.id %}" class="text-decoration-none">                                        
+                                        Telegram
+                                    </a>
+                                    <span>
+                                        {{ mailing.code }}
+                                        {% if mailing.group is None %}
+                                            ❌
+                                        {% else %}
+                                            ✔️
+                                        {% endif %}
+                                    </span>
+                                {% else %}
+                                    <span class="text-decoration-none">                                        
+                                        Telegram
+                                    </span>
+                                    <form action="{% url 'accounts:mailing_create' %}" method="post" style="margin-top: -2px !important;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-link p-0 m-0 border border-0">
+                                            Generate code
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </li>
+                        </ul>
+                        
+                        <hr />
+
+                        <!-- Список проектів користувача -->
+                        <p class="card-title h6 text-start">Your projects:</p>
+                        {% if projects_list %}
+                            <ul class="list-group my-3">
+                                {% for project in projects_list %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <a href="{% url 'accounts:project_detail' project.id %}" class="text-decoration-none">
+                                            {{ project.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'accounts:project_create' %}" class="link-secondary text-decoration-none">
+                                        + Create new project
+                                    </a>
+                                </li>
+                            </ul>
+                        {% else %}
+                            <p class="card-text text-start text-muted">
+                                You don't have any projects yet.
+                            </p>
+                            <ul class="list-group my-3">
+                                <li class="list-group-item">
+                                    <a href="{% url 'accounts:project_create' %}" class="link-secondary text-decoration-none">
+                                        + Create new project
+                                    </a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                        
+                        <hr />
+                        
+                        <!-- Інші розділи кабінету користувача -->
+                        <p class="card-text text-start">
+                            <a href="{% url 'logout' %}" class="btn btn-danger w-100">
+                                Log out
+                            </a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

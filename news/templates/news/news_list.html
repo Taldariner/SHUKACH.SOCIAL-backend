@@ -1,0 +1,377 @@
+{% extends 'common_template.html' %}
+
+{% block content %}
+<section class="news_list" style="min-height: 86vh;">
+    <div class="container">
+        <div class="row py-4 justify-content-center">
+            <div class="col-md-12 mt-4">
+                
+                <!-- News filtering form -->
+                <div class="card w-100">
+                    <div class="card-body">
+                        <div class="card-text text-center w-100 text-primary fs-1-5">
+                            Search Engine
+                        </div>
+                        <form method="get" class="mt-3" id="news_filter_form" autocomplete="off">
+                            {{ news_filter_form.socials }}
+                            {% if news_filter_form.socials.errors %}
+                            {% for error in news_filter_form.socials.errors %}
+                                <ul class="mb-0">
+                                    <li class="text-danger mt-3">{{ error }}</li>
+                                </ul>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ news_filter_form.countries }}
+                            {% if news_filter_form.countries.errors %}
+                            {% for error in news_filter_form.countries.errors %}
+                                <ul class="mb-0">
+                                    <li class="text-danger mt-3">{{ error }}</li>
+                                </ul>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ news_filter_form.channels }}
+                            {% if news_filter_form.channels.errors %}
+                            {% for error in news_filter_form.channels.errors %}
+                                <ul class="mb-0">
+                                    <li class="text-danger mt-3">{{ error }}</li>
+                                </ul>
+                            {% endfor %}
+                            {% endif %}
+                            
+                            {{ news_filter_form.languages }}
+                            {% if news_filter_form.languages.errors %}
+                            {% for error in news_filter_form.languages.errors %}
+                                <ul class="mb-0">
+                                    <li class="text-danger mt-3">{{ error }}</li>
+                                </ul>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ news_filter_form.entities }}
+                            {% if news_filter_form.entities.errors %}
+                            {% for error in news_filter_form.entities.errors %}
+                                <ul class="mb-0">
+                                    <li class="text-danger mt-3">{{ error }}</li>
+                                </ul>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ news_filter_form.keywords }}
+                            {% if news_filter_form.keywords.errors %}
+                            {% for error in news_filter_form.keywords.errors %}
+                                <ul class="mb-0">
+                                    <li class="text-danger mt-3">{{ error }}</li>
+                                </ul>
+                            {% endfor %}
+                            {% endif %}
+                            
+                            {{ news_filter_form.hashtags }}
+                            {% if news_filter_form.hashtags.errors %}
+                            {% for error in news_filter_form.hashtags.errors %}
+                                <ul class="mb-0">
+                                    <li class="text-danger mt-3">{{ error }}</li>
+                                </ul>
+                            {% endfor %}
+                            {% endif %}
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="posted_from" class="form-label mb-3">From:</label>
+                                    {{ news_filter_form.posted_from }}
+                                    {% if news_filter_form.posted_from.errors %}
+                                    {% for error in news_filter_form.posted_from.errors %}
+                                        <ul class="mb-0">
+                                            <li class="text-danger mt-3">{{ error }}</li>
+                                        </ul>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="posted_to" class="form-label mb-3">To:</label>
+                                    {{ news_filter_form.posted_to }}
+                                    {% if news_filter_form.posted_to.errors %}
+                                    {% for error in news_filter_form.posted_to.errors %}
+                                        <ul class="mb-0">
+                                            <li class="text-danger mt-3">{{ error }}</li>
+                                        </ul>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6 align-self-center">
+                                    <label for="results_per_page" class="form-label mb-0 lh-1">Results on page:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ news_filter_form.results_per_page }}
+                                    {% if news_filter_form.results_per_page.errors %}
+                                    {% for error in news_filter_form.results_per_page.errors %}
+                                        <ul class="mb-0">
+                                            <li class="text-danger mt-3">{{ error }}</li>
+                                        </ul>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <button type="submit" class="btn btn-primary w-100">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- News list -->
+                {% if news_page %}
+
+                    <!-- News export -->
+                    {% load custom_filters %}
+                    <div class="row align-items-center my-4">
+                        <div class="col-3">
+                            <span class="flex-shrink-0 lh-1">Усього: {{ news_count | number_splitted }}</span>
+                        </div>
+                        
+                        <div class="col-6 text-center">
+                            <!-- Page choose interface -->
+                            {% if news_page.has_other_pages %}
+                                <nav aria-label="Page navigation" class="mx-auto">
+                                    <ul class="pagination justify-content-center mb-0">
+                                        {% if news_page.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page={{ news_page.previous_page_number }}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <span class="page-link">&laquo;</span>
+                                            </li>
+                                        {% endif %}
+
+                                        <!-- Перша сторінка -->
+                                        {% if news_page.number > 4 %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page=1">
+                                                    1
+                                                </a>
+                                            </li>
+                                            <li class="page-item disabled">
+                                                <span class="page-link">...</span>
+                                            </li>
+                                        {% elif news_page.number > 1 %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page=1">
+                                                    1
+                                                </a>
+                                            </li>
+                                        {% endif %}
+
+                                        <!-- 6 найближчих до поточної сторінки -->
+                                        {% for num in news_page.paginator.page_range %}
+                                            {% if num > news_page.number|add:'-3' and num < news_page.number|add:'3' %}
+                                                {% if num == news_page.number %}
+                                                    <li class="page-item active">
+                                                        <span class="page-link">{{ num }}</span>
+                                                    </li>
+                                                {% elif num != 1  and num != news_page.paginator.num_pages %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page={{ num }}">
+                                                            {{ num }}
+                                                        </a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        <!-- Остання сторінка -->
+                                        {% if news_page.number < news_page.paginator.num_pages|add:'-3' %}
+                                            <li class="page-item disabled">
+                                                <span class="page-link">...</span>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page={{ news_page.paginator.num_pages }}">
+                                                    {{ news_page.paginator.num_pages }}
+                                                </a>
+                                            </li>
+                                        {% elif news_page.number < news_page.paginator.num_pages %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page={{ news_page.paginator.num_pages }}">
+                                                    {{ news_page.paginator.num_pages }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+
+                                        {% if news_page.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page={{ news_page.next_page_number }}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <span class="page-link">&raquo;</span>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            {% endif %} 
+                        </div>
+                            
+                        <div class="col-3 text-end">
+                            <a href="{% url 'news:export' %}?{% if request.GET %}{{ request.GET.urlencode }}{% endif %}" class="btn btn-secondary">
+                                Export to CSV
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Adding new news for coders -->
+                    {% if user.userprofile.subscription.editor %}
+                        <a href="{% url 'news:create' %}" class="btn btn-success w-100 mb-4">
+                            Add news
+                        </a>
+                    {% endif %}
+
+                    <!-- News list -->
+                    {% for news in news_page %}
+                        <div class="card w-100 mb-4">
+                            <div class="card-body">
+                                <p class="card-title h5 text-start">
+                                    <a href="{% url 'news:detail' news.id %}">
+                                        {{ news.header }}
+                                    </a>
+                                </p>
+                                
+                                <p class="card-text text-start">
+                                    <a href="{{ news.channel.social.tag_template }}">
+                                        {{ news.channel.name }} - {{ news.channel.social.name }}
+                                    </a>
+                                </p>
+
+                                <hr />
+                                
+                                <p class="card-text text-start">{{ news.text|news_trunkated }}</p>
+                                
+                                <hr />
+                                
+                                <p class="card-text d-flex justify-content-between align-items-center">
+                                    <span>
+                                        {% if user.userprofile.subscription.editor %}
+                                        <a href="{% url 'news:update' news.id %}" class="text-decoration-none me-1">
+                                            ✏️
+                                        </a>
+                                        {% endif %}
+                                        Прокодовано: {{ news.pipelined }}
+                                    </span>
+                                    <span>
+                                        {{ news.time_posted | date:"H:i:s d.m.Y" }}
+                                        {% if user.userprofile.subscription.editor %}
+                                        <a href="{% url 'news:delete' news.id %}" class="text-decoration-none ms-1">
+                                            🗑️
+                                        </a>
+                                        {% endif %}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    
+                    <!-- Пагінація -->
+                    {% if news_page.has_other_pages %}
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center mb-0">
+                                {% if news_page.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page={{ news_page.previous_page_number }}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">&laquo;</span>
+                                    </li>
+                                {% endif %}
+
+                                <!-- Перша сторінка -->
+                                {% if news_page.number > 4 %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page=1">
+                                            1
+                                        </a>
+                                    </li>
+                                    <li class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+                                {% elif news_page.number > 1 %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page=1">
+                                            1
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                <!-- 6 найближчих до поточної сторінки -->
+                                {% for num in news_page.paginator.page_range %}
+                                    {% if num > news_page.number|add:'-3' and num < news_page.number|add:'3' %}
+                                        {% if num == news_page.number %}
+                                            <li class="page-item active">
+                                                <span class="page-link">{{ num }}</span>
+                                            </li>
+                                        {% elif num != 1  and num != news_page.paginator.num_pages %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page={{ num }}">
+                                                    {{ num }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+
+                                <!-- Остання сторінка -->
+                                {% if news_page.number < news_page.paginator.num_pages|add:'-3' %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page={{ news_page.paginator.num_pages }}">
+                                            {{ news_page.paginator.num_pages }}
+                                        </a>
+                                    </li>
+                                {% elif news_page.number < news_page.paginator.num_pages %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page={{ news_page.paginator.num_pages }}">
+                                            {{ news_page.paginator.num_pages }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% if news_page.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?{% for key, values in request.GET.lists %}{% for value in values %}{% if key != 'page' %}{{ key }}={{ value|urlencode }}&{% endif %}{% endfor %}{% endfor %}page={{ news_page.next_page_number }}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">&raquo;</span>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+
+                {% else %}
+                    <p class="text-center h1">
+                        There are no news in database currently.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+

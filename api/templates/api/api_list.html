@@ -1,0 +1,87 @@
+{% extends 'common_template.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/default.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/python.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+
+<section class="news_list" style="min-height: 86vh;">
+    <div class="container">
+        <div class="row py-4 justify-content-center">
+            <div class="col-md-12 my-4">
+                
+                <!-- News filtering form -->
+                <div class="card w-100">
+                    <div class="card-body">
+                        <p class="card-text text-start w-100 text-primary fs-1-5">
+                            API Reference
+                        </p>
+                        <hr>
+                        <p class="card-text text-start w-100">
+                            SHUKACH.SOCIALS utilizes REST principles to implements it's API. Thus, this API is accessible through regular web-requests and URLs similar to regular site pages. This page contains description of API endpoints, provided by SHUKASH.SOCIAL.
+                        </p>
+                        <p class="card-text text-start w-100 text-primary fs-1-25">
+                            Rate Limiting
+                        </p>
+                        <p class="card-text text-start w-100">
+                            The speed limits for API endpoints are similar to those for website pages and amount to 20 requests per 10 seconds from one address.
+                        </p>
+                        <p class="card-text text-start w-100 text-primary fs-1-25">
+                            API Endpoints
+                        </p>
+                        <p class="card-text text-start w-100 text-primary">
+                            1. Resonant News
+                        </p>
+                        <p class="card-text text-start w-100">
+                            Endpoint URL:
+                        </p>
+                        <p class="card-text text-start w-100">
+                            <pre><code class="language-python form-control py-2">"shukach.pro/api/resonant_news"</code></pre>
+                        </p>
+                        <p class="card-text text-start w-100">
+                            Input parameters:
+                        </p>
+                        <p class="card-text text-start w-100">
+                            <pre><code class="language-python form-control py-2"># None</code></pre>
+                        </p>
+                        <p class="card-text text-start w-100">
+                            Output parameters:
+                        </p>
+                        <pre class="mb-3"><code class="language-python form-control py-2"># JSON list with latest news from 5 predefined channels.
+[
+    {
+        "header":        "Украина не вступит в ЕС, пока не решится вопрос Волынской трагедии, — министр обороны Польши Косиняк-Камыш.",
+        "channel_name":  "Инсайдер UA | Україна | Новини",
+        "newspost_link": "https://t.me/insiderUKR/84227"
+    },
+    {
+        "header":        "💥В Енергодарі сьогодні підірвали «начальника фізичної охорони» окупованої ЗАЕС, – ГУР.",
+        "channel_name":  "Труха⚡️Україна",
+        "newspost_link": "https://t.me/truexanewsua/99316"
+    },
+    {
+        "header":        "У Генштабі підтвердили удар по нафтобазі у Воронезької області РФ",
+        "channel_name":  "Українська правда",
+        "newspost_link": "https://t.me/ukrpravda_news/51377"
+    },
+    {
+        "header":        "💀 В Енергодарі вибухнув воєнний злочинець ―  «начальник фізичної охорони» окупованої ЗАЕС — ГУР",
+        "channel_name":  "Реальна війна | Україна | Новини",
+        "newspost_link": "https://t.me/voynareal/100114"
+    },
+    {
+        "header":        "Today, the new NATO Secretary General, Mark Rutte, paid his first visit to Kyiv.",
+        "channel_name":  "Zelenskiy / Official",
+        "newspost_link": "https://t.me/V_Zelenskiy_official/11915"
+    }
+]</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+

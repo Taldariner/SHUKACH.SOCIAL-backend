@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHUKACH.SOCIAL - Social Media Research System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" >
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+            crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin-top: 0vh; /* Ensure navbar doesn't overlap content */
+        }
+        section {
+            min-height: 100vh;
+        }
+        .hero {
+            background: url("{% static 'images/bg_1.jpg' %}") no-repeat center center;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            margin-top: -14vh;
+        }
+        .hero h1 {
+            font-size: 4rem;
+        }
+        h3 {
+            font-size: 2rem;
+        }
+        .hero * {
+            font-size: 1.25rem;
+        }
+        #about p {
+            font-size: 1.25rem;
+        }
+        #features p {
+            font-size: 1.25rem;
+        }
+        button {
+            font-size: 1.25rem;
+        }
+        label {
+            font-size: 1.25rem;
+        }
+        .fs-1-25 {
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body class="bg-primary">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark px-5 py-4" style="min-height: 14vh;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><h4><b>SHUKACH.SOCIAL</b></h4></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item ms-3">
+                        <a class="nav-link active" href="/"><h4>Home</h4></a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="nav-link" href="/news"><h4>News</h4></a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="nav-link" href="/#features"><h4>About</h4></a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="nav-link" href="/api"><h4>API</h4></a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="nav-link" href="/accounts/profile/"><h4>Cabinet</h4></a>
+                    </li>
+                    <!--<li class="nav-item ms-3">
+                        <a class="nav-link" href="/admin"><h4>Admin</h4></a>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero d-flex align-items-center">
+        <div id="news" class="w-100">
+            <div class="container d-flex flex-column align-items-center justify-content-center">
+                <div class="row mb-4">
+                    <div class="col-md-12 mb-4">
+                        <h1>Welcome to SHUKACH.SOCIAL</h1>
+                        <p>Your ultimate social media research tool</p>
+                        <!--<a href="#features" class="btn btn-light text-primary btn-lg">Learn More</a>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- First Column (2 cards) -->
+                    <div class="col-md-4 align-self-center">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p class="card-title text-primary text-start h4">
+                                    {{ resonant_news.0.header }}
+                                </p>
+                                <p class="text-start my-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                                        <path d="M31,8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4v9H31V8Z" fill="#2455b2"></path>
+                                        <path d="M5,28H27c2.209,0,4-1.791,4-4v-8H1v8c0,2.209,1.791,4,4,4Z" fill="#f9da49"></path>
+                                        <path d="M5,28H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4ZM2,8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8Z" opacity=".15"></path>
+                                        <path d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z" fill="#fff" opacity=".2"></path>
+                                    </svg>
+                                    <a class="link-secondary" href="https://shukach.pro/news/{{resonant_news.0.id}}">
+                                        {{ resonant_news.0.channel.name }}
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p class="card-title text-primary text-start h4">
+                                    {{ resonant_news.1.header }}
+                                </p>
+                                <p class="text-start my-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                                        <path d="M31,8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4v9H31V8Z" fill="#2455b2"></path>
+                                        <path d="M5,28H27c2.209,0,4-1.791,4-4v-8H1v8c0,2.209,1.791,4,4,4Z" fill="#f9da49"></path>
+                                        <path d="M5,28H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4ZM2,8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8Z" opacity=".15"></path>
+                                        <path d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z" fill="#fff" opacity=".2"></path>
+                                    </svg>
+                                    <a class="link-secondary" href="https://shukach.pro/news/{{resonant_news.1.id}}">
+                                        {{ resonant_news.1.channel.name }}
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Middle Column (1 card) -->
+                    <div class="col-md-4 align-self-center">
+                        <div class="card mb-4 bg-primary">
+                            <div class="card-body">
+                                <h4 class="card-title text-light">Top 5</h4>
+                                <p class="card-text text-light">Most resonant news</p>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p class="card-title text-primary text-start h4">
+                                    {{ resonant_news.2.header }}
+                                </p>
+                                <p class="text-start my-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                                        <path d="M31,8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4v9H31V8Z" fill="#2455b2"></path>
+                                        <path d="M5,28H27c2.209,0,4-1.791,4-4v-8H1v8c0,2.209,1.791,4,4,4Z" fill="#f9da49"></path>
+                                        <path d="M5,28H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4ZM2,8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8Z" opacity=".15"></path>
+                                        <path d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z" fill="#fff" opacity=".2"></path>
+                                    </svg>
+                                    <a class="link-secondary" href="https://shukach.pro/news/{{resonant_news.2.id}}">
+                                        {{ resonant_news.2.channel.name }}
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Third Column (2 cards) -->
+                    <div class="col-md-4 align-self-center">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p class="card-title text-primary text-start h4">
+                                    {{ resonant_news.3.header }}
+                                </p>
+                                <p class="text-start my-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                                        <path d="M31,8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4v9H31V8Z" fill="#2455b2"></path>
+                                        <path d="M5,28H27c2.209,0,4-1.791,4-4v-8H1v8c0,2.209,1.791,4,4,4Z" fill="#f9da49"></path>
+                                        <path d="M5,28H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4ZM2,8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8Z" opacity=".15"></path>
+                                        <path d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z" fill="#fff" opacity=".2"></path>
+                                    </svg>
+                                    <a class="link-secondary" href="https://shukach.pro/news/{{resonant_news.3.id}}">
+                                        {{ resonant_news.3.channel.name }}
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p class="card-title text-primary text-start h4">
+                                    {{ resonant_news.4.header }}
+                                </p>
+                                <p class="text-start my-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32">
+                                        <path d="M31,8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4v9H31V8Z" fill="#2455b2"></path>
+                                        <path d="M5,28H27c2.209,0,4-1.791,4-4v-8H1v8c0,2.209,1.791,4,4,4Z" fill="#f9da49"></path>
+                                        <path d="M5,28H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4ZM2,8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8Z" opacity=".15"></path>
+                                        <path d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z" fill="#fff" opacity=".2"></path>
+                                    </svg>
+                                    <a class="link-secondary" href="https://shukach.pro/news/{{resonant_news.4.id}}">
+                                        {{ resonant_news.4.channel.name }}
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5 d-flex align-items-center bg-white" style="min-height: 100vh;">
+        <div class="container d-flex flex-column align-items-center justify-content-center">
+            <div class="row">
+                <div class="col text-center mb-4">
+                    <h3>Features</h3>
+                    <p class="lead">Explore the powerful features of SHUKACH.SOCIAL</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 text-center align-self-center">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Advanced Analytics</h4>
+                            <p class="card-text">Gain deep insights with our advanced analytics tools. Visualize trends, patterns, and correlations in your social media data to make informed decisions.</p>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Real-time Monitoring</h4>
+                            <p class="card-text">Monitor social media in real-time to stay updated with the latest conversations and trends. React promptly to any critical issues or opportunities as they arise.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center align-self-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Powerful AI Tools</h4>
+                            <p class="card-text">Leverage the power of artificial intelligence to analyze large volumes of social media data, identify key influencers, and detect emerging trends.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center align-self-center">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Comprehensive Reports</h4>
+                            <p class="card-text">Generate comprehensive and customizable reports with ease. Present your findings in a visually appealing format to stakeholders and decision-makers.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Data Security</h4>
+                            <p class="card-text">Ensure the security and privacy of your social media data with our robust data protection measures. Trust SHUKACH.SOCIAL to safeguard your information.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 d-flex align-items-center bg-light" style="min-height: 40vh;">
+        <div class="container d-flex flex-column align-items-center justify-content-center">
+            <div class="row">
+                <div class="col text-center">
+                    <h3>About Us</h3>
+                    <p class="lead">Learn more about SHUKACH.SOCIAL</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-2">
+                        SHUKACH.SOCIAL is a state-of-the-art social media research system designed to help you analyze, monitor, and report on social media trends and data. Our platform offers advanced analytics, real-time monitoring, and comprehensive reporting tools to provide you with the insights you need.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-2">
+                        With SHUKACH.SOCIAL, you can stay ahead of the curve and make informed decisions based on accurate and up-to-date social media data. Whether you're a business, researcher, or analyst, SHUKACH.SOCIAL has the tools you need to succeed in the ever-evolving world of social media.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 d-flex align-items-center bg-white" style="min-height: 53vh;">
+        <div class="container d-flex flex-column align-items-center justify-content-center">
+            <div class="row w-100 justify-content-center">
+                <div class="col-md-6 mb-2">
+                    <h2>Contact Us</h2>
+                    <p class="lead">Get in touch with the SHUKACH.SOCIAL team</p>
+
+                    <form>
+                        <div class="form-group my-3">
+                            <input type="text" class="form-control" id="name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group my-3">
+                            <input type="email" class="form-control" id="email" placeholder="Your email" required>
+                        </div>
+                        <div class="form-group my-3">
+                            <textarea class="form-control" id="message" rows="5" placeholder="Your message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-3 w-100">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-2 d-flex align-items-center bg-dark text-white" style="min-height: 7vh">
+        <div class="container d-flex align-items-center justify-content-center">
+            <p class="mb-0" style="font-size: 1.25rem;">&copy; 2024 SHUKACH.SOCIAL. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

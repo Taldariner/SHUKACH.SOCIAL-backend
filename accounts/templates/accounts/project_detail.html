@@ -1,0 +1,95 @@
+{% extends 'common_template.html' %}
+
+{% block content %}
+
+<section class="project_detail" style="min-height: 86vh;">
+    <div class="container">
+        <div class="row py-4 justify-content-center">
+            <div class="col-md-12 my-4">
+                
+                <!-- Project form -->
+                <div class="card w-100">
+                    <div class="card-body">
+                        <form method="post" id="project_form" autocomplete="off">
+                            {% csrf_token %}
+                            
+                            <!--{{ form }}-->
+
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                            {% for error in form.name.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            <hr />
+
+                            {{ form.socials }}
+                            {% if form.socials.errors %}
+                            {% for error in form.socials.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.countries }}
+                            {% if form.countries.errors %}
+                            {% for error in form.countries.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.channels }}
+                            {% if form.channels.errors %}
+                            {% for error in form.channels.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+                            
+                            {{ form.languages }}
+                            {% if form.languages.errors %}
+                            {% for error in form.languages.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.entities }}
+                            {% if form.entities.errors %}
+                            {% for error in form.entities.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.keywords }}
+                            {% if form.keywords.errors %}
+                            {% for error in form.keywords.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+                            
+                            {{ form.hashtags }}
+                            {% if form.hashtags.errors %}
+                            {% for error in form.hashtags.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            <hr />
+
+                            <button type="submit" formaction="{% url 'accounts:project_update' project.id %}" class="btn btn-success w-100">
+                                Save
+                            </button>
+                            <a href="{% url 'accounts:project_delete' project.id %}" class="btn btn-danger w-100 mt-3">
+                                Delete
+                            </a>
+                            <a href="{% url 'accounts:project_search' project.id %}" class="btn btn-primary w-100 mt-3">
+                                Search
+                            </a>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

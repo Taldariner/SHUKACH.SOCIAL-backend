@@ -1,0 +1,4 @@
+# START CRON JOB
+*/5 * * * * /app/run_crons_server.sh >> /app/log_crons.log 2>&1
+0 * * * * /app/run_crons_mailings.sh >> /app/log_mailings.log 2>&1
+# END CRON JOB

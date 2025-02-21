@@ -1,0 +1,142 @@
+{% extends 'common_template.html' %}
+
+{% block content %}
+<section class="project_detail" style="min-height: 86vh;">
+    <div class="container">
+        <div class="row pt-4 justify-content-center">
+            <div class="col-md-12 mt-4">
+                
+                <!-- Project form -->
+                <div class="card w-100">
+                    <div class="card-body">
+                        <form method="post" id="project_delete_form" autocomplete="off">
+                            {% csrf_token %}
+                            
+                            <!-- Ім'я проекту -->
+                            <div class="mb-3">
+                                <span class="fs-1-5">
+                                    Sure you want to delete project
+                                    <a href="{% url 'accounts:project_detail' project.id %}" class="text-primary text-decoration-none">
+                                        {{ project.name }}</a>? 
+                                </span>
+                            </div>
+                            
+                            <hr />
+
+                            <!-- Поля соціальних мереж -->
+                            <div class="mb-3">
+                                Socials:
+                                <br />
+                                {% spaceless %}
+                                {% if saved_socials.all %}
+                                    {% for social in saved_socials %}
+                                        <span class="tag d-inline-block py-1 px-2 mt-2 me-2 ms-0 bg-primary text-light">{{ social }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    -
+                                {% endif %}
+                                {% endspaceless %}
+                            </div>
+
+                            <!-- Поля країн -->
+                            <div class="mb-3">
+                                Countries:
+                                <br />
+                                {% spaceless %}
+                                {% if saved_countries.all %}
+                                    {% for country in saved_countries %}
+                                        <span class="tag d-inline-block py-1 px-2 mt-2 me-2 ms-0 bg-primary text-light">{{ country }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    -
+                                {% endif %}
+                                {% endspaceless %}
+                            </div>
+
+                            <!-- Поля каналів -->
+                            <div class="mb-3">
+                                Channels:
+                                <br />
+                                {% spaceless %}
+                                {% if saved_channels.all %}
+                                    {% for channel in saved_channels %}
+                                        <span class="tag d-inline-block py-1 px-2 mt-2 me-2 ms-0 bg-primary text-light">{{ channel }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    -
+                                {% endif %}
+                                {% endspaceless %}
+                            </div>
+
+                            <!-- Autotags -->
+                            <div class="mb-3">
+                                Languages:
+                                <br />
+                                {% spaceless %}
+                                {% if saved_languages.all %}
+                                    {% for language in saved_languages %}
+                                        <span class="tag d-inline-block py-1 px-2 mt-2 me-2 ms-0 bg-primary text-light">{{ language }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    -
+                                {% endif %}
+                                {% endspaceless %}
+                            </div>
+
+                            <div class="mb-3">
+                                Entites:
+                                <br />
+                                {% spaceless %}
+                                {% if saved_entities.all %}
+                                    {% for entity in saved_entities %}
+                                        <span class="tag d-inline-block py-1 px-2 mt-2 me-2 ms-0 bg-primary text-light">{{ entity }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    -
+                                {% endif %}
+                                {% endspaceless %}
+                            </div>
+                            <div class="mb-3">
+                                Keywords:
+                                <br />
+                                {% spaceless %}
+                                {% if saved_keywords.all %}
+                                    {% for keyword in saved_keywords %}
+                                        <span class="tag d-inline-block py-1 px-2 mt-2 me-2 ms-0 bg-success text-light">{{ keyword }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    -
+                                {% endif %}
+                                {% endspaceless %}
+                            </div>
+
+                            <div class="mb-3">
+                                Hashtags:
+                                <br />
+                                {% spaceless %}
+                                {% if saved_hashtags.all %}
+                                    {% for hashtag in saved_hashtags %}
+                                        <span class="tag d-inline-block py-1 px-2 mt-2 me-2 ms-0 bg-warning text-light">{{ hashtag }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    -
+                                {% endif %}
+                                {% endspaceless %}
+                            </div>
+
+                            <hr />
+
+                            <button type="submit" formaction="{% url 'accounts:project_delete' project.id %}" class="btn btn-danger w-100">
+                                Delete
+                            </button>
+                            <a href="{% url 'accounts:project_detail' project.id %}" class="btn btn-primary w-100 mt-3">
+                                Discard
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

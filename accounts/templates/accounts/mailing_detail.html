@@ -1,0 +1,74 @@
+{% extends 'common_template.html' %}
+
+{% block content %}
+
+<section class="mailing_detail" style="min-height: 86vh;">
+    <div class="container">
+        <div class="row py-4 justify-content-center">
+            <div class="col-md-12 my-4">
+                
+                <!-- Project form -->
+                <div class="card w-100">
+                    <div class="card-body">
+                        <form method="post" id="mailing_form" autocomplete="off">
+                            {% csrf_token %}
+
+                            <span class="form-control form-main mb-3 text-primary fs-1-5">
+                                Mailing - Telegram
+                            </span>
+
+                            <hr />
+
+                            {{ form.news_channel_1 }}
+                            {% if form.news_channel_1.errors %}
+                            {% for error in form.news_channel_1.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.news_channel_2 }}
+                            {% if form.news_channel_2.errors %}
+                            {% for error in form.news_channel_2.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.news_channel_3 }}
+                            {% if form.news_channel_3.errors %}
+                            {% for error in form.news_channel_3.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.news_channel_4 }}
+                            {% if form.news_channel_4.errors %}
+                            {% for error in form.news_channel_4.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            {{ form.news_channel_5 }}
+                            {% if form.news_channel_5.errors %}
+                            {% for error in form.news_channel_5.errors %}
+                                <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                            {% endif %}
+
+                            <hr />
+
+                            <button type="submit" formaction="{% url 'accounts:mailing_update' mailing.id %}" class="btn btn-success w-100">
+                                Save
+                            </button>
+                            <a href="{% url 'accounts:profile' %}" class="btn btn-secondary w-100 mt-3">
+                                Discard
+                            </a>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

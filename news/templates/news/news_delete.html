@@ -1,0 +1,101 @@
+{% extends 'common_template.html' %}
+
+{% block content %}
+<section class="news_detail" style="min-height: 86vh;">
+    <div class="container">
+        <div class="row py-4 justify-content-center">
+            <div class="col-md-12 mt-4">
+                
+                <div class="card w-100 mb-4">
+                    <div class="card-body">
+                        <form method="post" id="project_delete_form" autocomplete="off">
+                            {% csrf_token %}
+                            {% load custom_filters %}
+                            
+                            <p class="card-title mb-3 fs-1-5" text-start> 
+                                Sure you want to delete this news?
+                            </p>
+
+                            <hr />
+                            
+                            <div class="mb-3">
+                                Channel:<br>
+                                <a href="{{ news.channel.social.tag_template }}">
+                                    {{ news.channel.name }} - {{ news.channel.social.name }}
+                                </a>
+                            </p>
+                            </div>
+                            
+                            <div class="mb-3">
+                                Text:<br>
+                                {{ news.text | news_paragraphed | safe }}
+                            </div>
+                            
+                            <hr />
+                            
+                            {% spaceless %}
+                            
+                            <div class="mb-3">
+                                Entities:<br>
+                                {% if entities %}
+                                    {% for entity in entities %}
+                                        <span class="tag d-inline-block py-1 px-2 my-1 me-2 ms-0 text-bg-primary text-light">{{ entity }}</span>
+                                    {% endfor %}
+                                    <br>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                Keywords:<br>
+                            
+                                {% if keywords %}
+                                    {% for keyword in keywords %}
+                                        <span class="tag d-inline-block py-1 px-2 my-1 me-2 ms-0 text-bg-success text-light">{{ keyword }}</span>
+                                    {% endfor %}
+                                    <br>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </div>
+
+                            <div>
+                                Hashtags:<br>
+                            
+                                {% if hashtags %}
+                                    {% for hashtag in hashtags %}
+                                        <span class="tag d-inline-block py-1 px-2 my-1 me-2 ms-0 text-bg-warning text-light">{{ hashtag }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </div>
+                            {% endspaceless %}
+
+                            <hr />
+                            
+                            <p class="card-text d-flex justify-content-between align-items-center">
+                                <span>
+                                    Прокодовано: {{ news.pipelined }}
+                                </span>
+                                <span>
+                                    {{ news.time_posted | date:"H:i:s d.m.Y" }}
+                                </span>
+                            </p>
+                            <hr />
+                            <button type="submit" formaction="{% url 'news:delete' news.id %}" class="btn btn-danger w-100 mt-3">
+                                Delete
+                            </button>
+                            <a href="{% url 'news:detail' news.id %}" class="btn btn-primary w-100 mt-3">
+                                Discard
+                            </a>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
